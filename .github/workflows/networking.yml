@@ -13,11 +13,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Checkout PcapPlusPlus
+        uses: actions/checkout@v2
+        with:
+          repository: seladb/PcapPlusPlus
+          path: './PcapPlusPlus'
+    
       - name: Install
         run: |
           apt install net-tools
           apt install tcpdump
           apt install tcpreplay
+
+      - name: Configure PcapPlusPlus
+        run: cd PcapPlusPlus && ./configure-linux.sh --default
+
+      - name: Build PcapPlusPlus
+        run: cd PcapPlusPlus && make all
 
       - name: Run
         run: ./run.sh
