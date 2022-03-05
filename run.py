@@ -3,10 +3,17 @@ import socket
 
 ip_address= socket.gethostbyname(socket.gethostname())
 
-tcpreplay_proc = subprocess.Popen(["tcpreplay", "-i", "eth0", "--mbps=10", "-l", "0", "1.pcap"])
+try:
+  tcpreplay_proc = subprocess.Popen(["tcpreplay", "-i", "eth0", "--mbps=10", "-l", "0", "1.pcap"])
 
-subprocess.run(["Bin/Packet++Test"], cwd="PcapPlusPlus/Tests/Packet++Test")
+  completed_process = subprocess.run(["Bin/Packet++Test"], cwd="PcapPlusPlus/Tests/Packet++Test")
+  if completed_process.returncode != 0:
+    exit(completed_process.returncode)
 
-subprocess.run(["Bin/Pcap++Test", "-i", ip_address], cwd="PcapPlusPlus/Tests/Pcap++Test")
+  completed_process = subprocess.run(["Bin/Pcap++Test", "-i", ip_address], cwd="PcapPlusPlus/Tests/Pcap++Test")
+  if completed_process.returncode != 0:
+    exit(completed_process.returncode)
 
-tcpreplay_proc.kill()
+finally:
+  tcpreplay_proc.kill()
+
