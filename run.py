@@ -10,6 +10,10 @@ try:
   if completed_process.returncode != 0:
     exit(completed_process.returncode)
 
+  subprocess.run("arp")
+  subprocess.run(["arp", "-a"])
+  subprocess.run("arp -a | awk '{print $2}' | sed 's/.$//; s/^.//'")
+
   completed_process = subprocess.run(["Bin/Pcap++Test", "-i", ip_address], cwd="PcapPlusPlus/Tests/Pcap++Test")
   if completed_process.returncode != 0:
     exit(completed_process.returncode)
