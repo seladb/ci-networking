@@ -13,5 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install
+        run: apt install net-tools
+
       - name: Run
         run: ./run.sh
