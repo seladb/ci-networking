@@ -9,6 +9,11 @@ jobs:
       matrix:
         include:
           - image: ubuntu2004
+            python: python3
+          - image: ubuntu1804
+            python: python3.8
+          - image: ubuntu1604
+            python: python3.8
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -31,4 +36,4 @@ jobs:
         run: cd PcapPlusPlus && make all
 
       - name: Run
-        run: ./run.sh
+        run: ${{ matrix.python }} run.py
