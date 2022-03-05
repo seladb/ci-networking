@@ -21,8 +21,6 @@ jobs:
     
       - name: Install
         run: |
-          apt install net-tools
-          apt install tcpdump
           apt install tcpreplay
 
       - name: Configure PcapPlusPlus
