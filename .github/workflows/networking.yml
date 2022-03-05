@@ -21,6 +21,7 @@ jobs:
     
       - name: Install
         run: |
+          apt install net-tools
           apt install tcpreplay
 
       - name: Configure PcapPlusPlus
