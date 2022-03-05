@@ -1,10 +1,15 @@
 import subprocess
-import time
+# import time
+import socket
 
-tcpreplay_proc = subprocess.Popen(["tcpreplay", "-i", "eth0", "--mbps=10", "1.pcap"])
-tcpdump_proc = subprocess.Popen("tcpdump")
+ip_address= socket.gethostbyname(socket.gethostname())
 
-time.sleep(10)
+tcpreplay_proc = subprocess.Popen(["tcpreplay", "-i", "eth0", "--mbps=10", "-l", "0", "1.pcap"])
+# tcpdump_proc = subprocess.Popen("tcpdump")
 
-tcpdump_proc.kill()
+subprocess.run(["Bin/Pcap++Test", "-i", ip_address], cwd="PcapPlusPlus/Tests/Pcap++Test")
+
+# time.sleep(10)
+
+# tcpdump_proc.kill()
 tcpreplay_proc.kill()
