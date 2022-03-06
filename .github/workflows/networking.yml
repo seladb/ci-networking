@@ -56,8 +56,9 @@ jobs:
     
       - name: Install
         run: |
-          yum install -y net-tools
-          yum install -y tcpreplay
+          dnf -y install net-tools
+          dnf makecache
+          dnf -y install tcpreplay
 
       - name: Configure PcapPlusPlus
         run: cd PcapPlusPlus && ./configure-linux.sh --default
@@ -66,7 +67,7 @@ jobs:
         run: cd PcapPlusPlus && make all
 
       - name: Run
-        run: ${{ matrix.python }} run.py
+        run: ${{ matrix.python }} run.py -s
 
   # ubuntu:
   #   runs-on: ubuntu-20.04
