@@ -2,14 +2,47 @@ name: Test networking
 on: [push]
 
 jobs:
-  fedora:
+  # fedora:
+  #   runs-on: ubuntu-20.04
+  #   container: seladb/${{ matrix.image }}
+  #   strategy:
+  #     matrix:
+  #       include:
+  #         - image: fedora34
+  #           python: python3
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+
+  #     - name: Checkout PcapPlusPlus
+  #       uses: actions/checkout@v2
+  #       with:
+  #         repository: seladb/PcapPlusPlus
+  #         path: './PcapPlusPlus'
+  #         ref: ci-live-tests
+    
+  #     - name: Install
+  #       run: |
+  #         yum install -y net-tools
+  #         yum install -y tcpreplay
+
+  #     - name: Configure PcapPlusPlus
+  #       run: cd PcapPlusPlus && ./configure-linux.sh --default
+
+  #     - name: Build PcapPlusPlus
+  #       run: cd PcapPlusPlus && make all
+
+  #     - name: Run
+  #       run: ${{ matrix.python }} run.py
+
+  centos:
     runs-on: ubuntu-20.04
     container: seladb/${{ matrix.image }}
     strategy:
       matrix:
         include:
-          - image: fedora34
-            python: python3
+          - image: centos7
+            python: python3.8
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
