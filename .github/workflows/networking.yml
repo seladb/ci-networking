@@ -2,6 +2,39 @@ name: Test networking
 on: [push]
 
 jobs:
+  alpine:
+    runs-on: ubuntu-20.04
+    container: seladb/${{ matrix.image }}
+    strategy:
+      matrix:
+        include:
+          - image: alpine315
+            python: python3
+            configure: --musl
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Checkout PcapPlusPlus
+        uses: actions/checkout@v2
+        with:
+          repository: seladb/PcapPlusPlus
+          path: './PcapPlusPlus'
+          ref: ci-live-tests
+    
+      - name: Install
+        run: |
+          apk add tcpreplay --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing
+
+      - name: Configure PcapPlusPlus
+        run: cd PcapPlusPlus && ./configure-linux.sh --default ${{ matrix.configure }}
+
+      - name: Build PcapPlusPlus
+        run: cd PcapPlusPlus && make all
+
+      - name: Run
+        run: ${{ matrix.python }} run.py
+
   # fedora:
   #   runs-on: ubuntu-20.04
   #   container: seladb/${{ matrix.image }}
@@ -35,43 +68,43 @@ jobs:
   #     - name: Run
   #       run: ${{ matrix.python }} run.py
 
-  centos:
-    runs-on: ubuntu-20.04
-    container: seladb/${{ matrix.image }}
-    strategy:
-      matrix:
-        include:
-          - image: centos7
-            python: python3.8
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  # centos:
+  #   runs-on: ubuntu-20.04
+  #   container: seladb/${{ matrix.image }}
+  #   strategy:
+  #     matrix:
+  #       include:
+  #         - image: centos7
+  #           python: python3.8
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
 
-      - name: Checkout PcapPlusPlus
-        uses: actions/checkout@v2
-        with:
-          repository: seladb/PcapPlusPlus
-          path: './PcapPlusPlus'
-          ref: ci-live-tests
+  #     - name: Checkout PcapPlusPlus
+  #       uses: actions/checkout@v2
+  #       with:
+  #         repository: seladb/PcapPlusPlus
+  #         path: './PcapPlusPlus'
+  #         ref: ci-live-tests
     
-      - name: Install
-        run: |
-          yum -y install net-tools
-          wget https://github.com/appneta/tcpreplay/releases/download/v4.4.1/tcpreplay-4.4.1.tar.gz
-          tar xvzf tcpreplay-4.4.1.tar.gz
-          cd tcpreplay-4.4.1
-          ./configure
-          make
-          make install
+  #     - name: Install
+  #       run: |
+  #         yum -y install net-tools
+  #         wget https://github.com/appneta/tcpreplay/releases/download/v4.4.1/tcpreplay-4.4.1.tar.gz
+  #         tar xvzf tcpreplay-4.4.1.tar.gz
+  #         cd tcpreplay-4.4.1
+  #         ./configure
+  #         make
+  #         make install
 
-      - name: Configure PcapPlusPlus
-        run: cd PcapPlusPlus && ./configure-linux.sh --default
+  #     - name: Configure PcapPlusPlus
+  #       run: cd PcapPlusPlus && ./configure-linux.sh --default
 
-      - name: Build PcapPlusPlus
-        run: cd PcapPlusPlus && make all
+  #     - name: Build PcapPlusPlus
+  #       run: cd PcapPlusPlus && make all
 
-      - name: Run
-        run: ${{ matrix.python }} run.py -s
+  #     - name: Run
+  #       run: ${{ matrix.python }} run.py -s
 
   # ubuntu:
   #   runs-on: ubuntu-20.04
