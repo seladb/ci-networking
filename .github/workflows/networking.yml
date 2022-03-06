@@ -57,8 +57,12 @@ jobs:
       - name: Install
         run: |
           yum -y install net-tools
-          yum makecache
-          yum -y install tcpreplay
+          wget https://github.com/appneta/tcpreplay/releases/download/v4.4.1/tcpreplay-4.4.1.tar.gz
+          tar xvzf tcpreplay-4.4.1.tar.gz
+          cd tcpreplay-4.4.1
+          ./configure
+          make
+          make install
 
       - name: Configure PcapPlusPlus
         run: cd PcapPlusPlus && ./configure-linux.sh --default
