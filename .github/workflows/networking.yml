@@ -56,9 +56,9 @@ jobs:
     
       - name: Install
         run: |
-          dnf -y install net-tools
-          dnf makecache
-          dnf -y install tcpreplay
+          yum -y install net-tools
+          yum makecache
+          yum -y install tcpreplay
 
       - name: Configure PcapPlusPlus
         run: cd PcapPlusPlus && ./configure-linux.sh --default
