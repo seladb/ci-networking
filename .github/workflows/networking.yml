@@ -34,8 +34,9 @@ jobs:
 
       - name: Run
         run: |
-          pip install netifaces
-          python run.py en0
+          python -m pip install -U pip
+          python -m pip install -r requirements.txt
+          python run.py --interface en0 --use-sudo
 
   # alpine:
   #   runs-on: ubuntu-20.04

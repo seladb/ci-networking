@@ -1,23 +1,45 @@
 from ast import arg
 import sys
 import subprocess
-import socket
+import argparse
 import netifaces as ni
 
 def main():
-  iface = sys.argv[1]
-  ip_address = ni.ifaddresses(iface)[ni.AF_INET][0]["addr"]
+  parser = argparse.ArgumentParser()
+  parser.add_argument(
+    "--interface",
+    "-i",
+    type=str,
+    required=True,
+    help="interface to use"
+  )
+  parser.add_argument(
+    "--use-sudo",
+    "-s",
+    action="store_true",
+    help="use sudo when running tests"
+  )
+  parser.add_argument(
+    "--test-args",
+    "-t",
+    type=str,
+    default="",
+    help="test arguments",
+  )
+  args = parser.parse_args()
+
+  ip_address = ni.ifaddresses(args.interface)[ni.AF_INET][0]["addr"]
   print("IP address is: %s" % ip_address)
 
-  # ip_address= socket.gethostbyname(socket.gethostname())
   try:
-    tcpreplay_proc = subprocess.Popen(["tcpreplay", "-i", iface, "--mbps=10", "-l", "0", "1.pcap"])
+    tcpreplay_proc = subprocess.Popen(["tcpreplay", "-i", args.interface, "--mbps=10", "-l", "0", "1.pcap"])
 
-    completed_process = subprocess.run(["sudo", "Bin/Packet++Test"] + sys.argv[1:], cwd="PcapPlusPlus/Tests/Packet++Test")
+    use_sudo = ["sudo"] if args.use_sudo else []
+    completed_process = subprocess.run(use_sudo + ["Bin/Packet++Test"] + args.test_args.split(), cwd="PcapPlusPlus/Tests/Packet++Test")
     if completed_process.returncode != 0:
       exit(completed_process.returncode)
 
-    completed_process = subprocess.run(["sudo", "Bin/Pcap++Test", "-i", ip_address] + sys.argv[2:], cwd="PcapPlusPlus/Tests/Pcap++Test")
+    completed_process = subprocess.run(use_sudo + ["Bin/Pcap++Test", "-i", ip_address] + args.test_args.split(), cwd="PcapPlusPlus/Tests/Pcap++Test")
     if completed_process.returncode != 0:
       exit(completed_process.returncode)
 
@@ -25,4 +47,4 @@ def main():
     tcpreplay_proc.kill()
 
 if __name__ == "__main__":
-    main()
+  main()
