@@ -13,11 +13,11 @@ def main():
   try:
     tcpreplay_proc = subprocess.Popen(["tcpreplay", "-i", iface, "--mbps=10", "-l", "0", "1.pcap"])
 
-    completed_process = subprocess.run(["Bin/Packet++Test"] + sys.argv[1:], cwd="PcapPlusPlus/Tests/Packet++Test")
+    completed_process = subprocess.run(["sudo", "Bin/Packet++Test"] + sys.argv[1:], cwd="PcapPlusPlus/Tests/Packet++Test")
     if completed_process.returncode != 0:
       exit(completed_process.returncode)
 
-    completed_process = subprocess.run(["Bin/Pcap++Test", "-i", ip_address] + sys.argv[2:], cwd="PcapPlusPlus/Tests/Pcap++Test")
+    completed_process = subprocess.run(["sudo", "Bin/Pcap++Test", "-i", ip_address] + sys.argv[2:], cwd="PcapPlusPlus/Tests/Pcap++Test")
     if completed_process.returncode != 0:
       exit(completed_process.returncode)
 
