@@ -61,6 +61,7 @@ jobs:
       - name: Install
         run: |
           apk add tcpreplay --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing
+          apk add py-netifaces
 
       - name: Configure PcapPlusPlus
         run: cd PcapPlusPlus && ./configure-linux.sh --default ${{ matrix.configure }}
