@@ -19,6 +19,15 @@ jobs:
       - name: Install
         run: brew install tcpreplay
 
+      - name: Configure PcapPlusPlus
+        run: cd PcapPlusPlus && ./configure-mac_os_x.sh
+
+      - name: Build PcapPlusPlus
+        run: cd PcapPlusPlus && make all
+
+      - name: Run
+        run: python run.py
+
   # alpine:
   #   runs-on: ubuntu-20.04
   #   container: seladb/${{ matrix.image }}
