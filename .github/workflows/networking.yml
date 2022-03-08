@@ -149,7 +149,7 @@ jobs:
         run: |
           ${{ matrix.python }} -m pip install -U pip
           ${{ matrix.python }} -m pip install -r requirements.txt
-          ${{ matrix.python }} run.py --interface eth0 --test-args "-s"
+          ${{ matrix.python }} run.py --interface eth0 --test-args="-s"
 
   ubuntu:
     runs-on: ubuntu-20.04
