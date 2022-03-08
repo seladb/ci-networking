@@ -33,7 +33,9 @@ jobs:
       #   run: cd PcapPlusPlus && make all
 
       - name: Run
-        run: python run.py
+        run: |
+          pip install netifaces
+          python run.py
 
   # alpine:
   #   runs-on: ubuntu-20.04
