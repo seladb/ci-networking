@@ -12,25 +12,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Checkout PcapPlusPlus
-        uses: actions/checkout@v2
-        with:
-          repository: seladb/PcapPlusPlus
-          path: './PcapPlusPlus'
-          ref: ci-live-tests
+      # - name: Checkout PcapPlusPlus
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: seladb/PcapPlusPlus
+      #     path: './PcapPlusPlus'
+      #     ref: ci-live-tests
 
-      - uses: actions/setup-python@v2
-        with:
-          python-version: "3.8.x"
+      # - uses: actions/setup-python@v2
+      #   with:
+      #     python-version: "3.8.x"
 
-      - name: Install
-        run: brew install tcpreplay
+      # - name: Install
+      #   run: brew install tcpreplay
 
-      - name: Configure PcapPlusPlus
-        run: cd PcapPlusPlus && ./configure-mac_os_x.sh
+      # - name: Configure PcapPlusPlus
+      #   run: cd PcapPlusPlus && ./configure-mac_os_x.sh
 
-      - name: Build PcapPlusPlus
-        run: cd PcapPlusPlus && make all
+      # - name: Build PcapPlusPlus
+      #   run: cd PcapPlusPlus && make all
 
       - name: Run
         run: python run.py

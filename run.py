@@ -4,6 +4,9 @@ import socket
 
 def main():
   ip_address= socket.gethostbyname(socket.gethostname())
+  print(ip_address)
+  subprocess.run("ifconfig")
+  return
 
   try:
     tcpreplay_proc = subprocess.Popen(["tcpreplay", "-i", "eth0", "--mbps=10", "-l", "0", "1.pcap"])
