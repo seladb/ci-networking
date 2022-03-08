@@ -186,6 +186,7 @@ jobs:
         run: cd PcapPlusPlus && make all
 
       - name: Run
+      - run: |
           ${{ matrix.python }} -m pip install -U pip
           ${{ matrix.python }} -m pip install -r requirements.txt
           ${{ matrix.python }} run.py --interface eth0
