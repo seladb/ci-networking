@@ -1,0 +1,29 @@
+task:
+  name: FreeBSD
+  freebsd_instance:
+    matrix:
+      image_family: freebsd-12-3
+      image_family: freebsd-13-0
+  update_script: IGNORE_OSVERSION=yes pkg update -f
+  find_network:
+    - python test_network.py
+
+  # name: FreeBSD
+  # freebsd_instance:
+  #   matrix:
+  #     image_family: freebsd-12-3
+  #     image_family: freebsd-13-0
+  # update_script: IGNORE_OSVERSION=yes pkg update -f
+  # install_script:
+  #   - pkg install -y libpcap bash gsed gmake
+  #   - python -m ensurepip
+  #   - python -m pip install -r Tests/ExamplesTest/requirements.txt
+  # configure_script:
+  #   - ./configure-freebsd.sh --default
+  # build_script:
+  #   - gmake all
+  # test_script:
+  #   - cd Tests/Packet++Test && Bin/Packet++Test
+  #   - cd ../Pcap++Test && sudo Bin/Pcap++Test -n
+  #   - source ../../ci/find_ip_freebsd.sh
+  #   - cd ../ExamplesTest && python -m pytest --interface $NETWORK_IP
