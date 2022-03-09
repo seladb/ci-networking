@@ -1,34 +1,35 @@
-task:
-  name: FreeBSD
-  freebsd_instance:
-    matrix:
-      image_family: freebsd-12-3
-      image_family: freebsd-13-0
-  update_script: IGNORE_OSVERSION=yes pkg update -f
-  install_script:
-    - pkg install -y tcpreplay tcpdump
-  find_network_script:
-    - python test_network.py
-    - ifconfig vtnet0 promisc
-    - tcpdump -G 10 -W 1 -i vtnet0
-    - tcpreplay -i vtnet0 --mbps=10 1.pcap
-
 # task:
-#   name: package-freebsd
+#   name: FreeBSD
 #   freebsd_instance:
 #     matrix:
 #       image_family: freebsd-12-3
 #       image_family: freebsd-13-0
-#   install_script: 
-#     - pkg install -y git libpcap bash gsed gmake tcpreplay
-#   get_code_script: git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
-#   configure_script:
-#     - cd PcapPlusPlus
-#     - ./configure-freebsd.sh --default
-#   build_script:
-#     - cd PcapPlusPlus
-#     - gmake all
-#   test_script:
-#     - python -m ensurepip
-#     - python -m pip install -r requirements.txt
-#     - python run.py --interface vtnet0
+#   update_script: IGNORE_OSVERSION=yes pkg update -f
+#   install_script:
+#     - pkg install -y tcpreplay tcpdump
+#   find_network_script:
+#     - python test_network.py
+#     - ifconfig vtnet0 promisc
+#     - tcpdump -G 10 -W 1 -i vtnet0
+#     - tcpreplay -i vtnet0 --mbps=10 1.pcap
+
+task:
+  name: package-freebsd
+  freebsd_instance:
+    matrix:
+      image_family: freebsd-12-3
+      image_family: freebsd-13-0
+  install_script: 
+    - pkg install -y git libpcap bash gsed gmake tcpreplay
+  get_code_script: git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
+  configure_script:
+    - cd PcapPlusPlus
+    - ./configure-freebsd.sh --default
+  build_script:
+    - cd PcapPlusPlus
+    - gmake all
+  test_script:
+    - python -m ensurepip
+    - python -m pip install -r requirements.txt
+    - ifconfig vtnet0 promisc
+    - python run.py --interface vtnet0
