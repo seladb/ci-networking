@@ -5,8 +5,11 @@ task:
       image_family: freebsd-12-3
       image_family: freebsd-13-0
   update_script: IGNORE_OSVERSION=yes pkg update -f
+  install_script:
+    - pkg install tcpreplay
   find_network_script:
     - python test_network.py
+    - tcpreplay -i vtnet0 --mbps=10 1.pcap
 
   # name: FreeBSD
   # freebsd_instance:
