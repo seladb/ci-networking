@@ -9,6 +9,7 @@ task:
     - pkg install -y tcpreplay tcpdump
   find_network_script:
     - python test_network.py
+    - ifconfig vtnet0 promisc
     - tcpdump -G 10 -W 1 -i vtnet0
     - tcpreplay -i vtnet0 --mbps=10 1.pcap
 
