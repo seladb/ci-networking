@@ -2,192 +2,192 @@ name: Test networking
 on: [push]
 
 jobs:
-  # macos:
-  #   runs-on: ${{ matrix.os-version }}
-  #   strategy:
-  #     matrix:
-  #       os-version: [macos-10.15, macos-11]
+  macos:
+    runs-on: ${{ matrix.os-version }}
+    strategy:
+      matrix:
+        os-version: [macos-10.15, macos-11]
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Checkout PcapPlusPlus
-  #       uses: actions/checkout@v2
-  #       with:
-  #         repository: seladb/PcapPlusPlus
-  #         path: './PcapPlusPlus'
-  #         ref: ci-live-tests
+      - name: Checkout PcapPlusPlus
+        uses: actions/checkout@v2
+        with:
+          repository: seladb/PcapPlusPlus
+          path: './PcapPlusPlus'
+          ref: ci-live-tests
 
-  #     - uses: actions/setup-python@v2
-  #       with:
-  #         python-version: "3.8.x"
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.8.x"
 
-  #     - name: Install
-  #       run: brew install tcpreplay
+      - name: Install
+        run: brew install tcpreplay
 
-  #     - name: Configure PcapPlusPlus
-  #       run: cd PcapPlusPlus && ./configure-mac_os_x.sh
+      - name: Configure PcapPlusPlus
+        run: cd PcapPlusPlus && ./configure-mac_os_x.sh
 
-  #     - name: Build PcapPlusPlus
-  #       run: cd PcapPlusPlus && make all
+      - name: Build PcapPlusPlus
+        run: cd PcapPlusPlus && make all
 
-  #     - name: Run
-  #       run: |
-  #         python -m pip install -U pip
-  #         python -m pip install -r requirements.txt
-  #         python run.py --interface en0 --use-sudo
+      - name: Run
+        run: |
+          python -m pip install -U pip
+          python -m pip install -r requirements.txt
+          python run.py --interface en0 --use-sudo
 
-  # alpine:
-  #   runs-on: ubuntu-20.04
-  #   container: seladb/${{ matrix.image }}
-  #   strategy:
-  #     matrix:
-  #       include:
-  #         - image: alpine315
-  #           python: python3
-  #           configure: --musl
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  alpine:
+    runs-on: ubuntu-20.04
+    container: seladb/${{ matrix.image }}
+    strategy:
+      matrix:
+        include:
+          - image: alpine315
+            python: python3
+            configure: --musl
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Checkout PcapPlusPlus
-  #       uses: actions/checkout@v2
-  #       with:
-  #         repository: seladb/PcapPlusPlus
-  #         path: './PcapPlusPlus'
-  #         ref: ci-live-tests
+      - name: Checkout PcapPlusPlus
+        uses: actions/checkout@v2
+        with:
+          repository: seladb/PcapPlusPlus
+          path: './PcapPlusPlus'
+          ref: ci-live-tests
     
-  #     - name: Install
-  #       run: |
-  #         apk add tcpreplay --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing
-  #         apk add py-netifaces
+      - name: Install
+        run: |
+          apk add tcpreplay --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing
+          apk add py-netifaces
 
-  #     - name: Configure PcapPlusPlus
-  #       run: cd PcapPlusPlus && ./configure-linux.sh --default ${{ matrix.configure }}
+      - name: Configure PcapPlusPlus
+        run: cd PcapPlusPlus && ./configure-linux.sh --default ${{ matrix.configure }}
 
-  #     - name: Build PcapPlusPlus
-  #       run: cd PcapPlusPlus && make all
+      - name: Build PcapPlusPlus
+        run: cd PcapPlusPlus && make all
 
-  #     - name: Run
-  #       run: |
-  #         ${{ matrix.python }} -m pip install -U pip
-  #         ${{ matrix.python }} -m pip install -r requirements.txt
-  #         ${{ matrix.python }} run.py --interface eth0
+      - name: Run
+        run: |
+          ${{ matrix.python }} -m pip install -U pip
+          ${{ matrix.python }} -m pip install -r requirements.txt
+          ${{ matrix.python }} run.py --interface eth0
 
-  # fedora:
-  #   runs-on: ubuntu-20.04
-  #   container: seladb/${{ matrix.image }}
-  #   strategy:
-  #     matrix:
-  #       include:
-  #         - image: fedora34
-  #           python: python3
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  fedora:
+    runs-on: ubuntu-20.04
+    container: seladb/${{ matrix.image }}
+    strategy:
+      matrix:
+        include:
+          - image: fedora34
+            python: python3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Checkout PcapPlusPlus
-  #       uses: actions/checkout@v2
-  #       with:
-  #         repository: seladb/PcapPlusPlus
-  #         path: './PcapPlusPlus'
-  #         ref: ci-live-tests
+      - name: Checkout PcapPlusPlus
+        uses: actions/checkout@v2
+        with:
+          repository: seladb/PcapPlusPlus
+          path: './PcapPlusPlus'
+          ref: ci-live-tests
     
-  #     - name: Install
-  #       run: |
-  #         yum install -y net-tools
-  #         yum install -y tcpreplay
+      - name: Install
+        run: |
+          yum install -y net-tools
+          yum install -y tcpreplay
 
-  #     - name: Configure PcapPlusPlus
-  #       run: cd PcapPlusPlus && ./configure-linux.sh --default
+      - name: Configure PcapPlusPlus
+        run: cd PcapPlusPlus && ./configure-linux.sh --default
 
-  #     - name: Build PcapPlusPlus
-  #       run: cd PcapPlusPlus && make all
+      - name: Build PcapPlusPlus
+        run: cd PcapPlusPlus && make all
 
-  #     - name: Run
-  #       run: |
-  #         ${{ matrix.python }} -m pip install -U pip
-  #         ${{ matrix.python }} -m pip install -r requirements.txt
-  #         ${{ matrix.python }} run.py --interface eth0
+      - name: Run
+        run: |
+          ${{ matrix.python }} -m pip install -U pip
+          ${{ matrix.python }} -m pip install -r requirements.txt
+          ${{ matrix.python }} run.py --interface eth0
 
-  # centos:
-  #   runs-on: ubuntu-20.04
-  #   container: seladb/${{ matrix.image }}
-  #   strategy:
-  #     matrix:
-  #       include:
-  #         - image: centos7
-  #           python: python3.8
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  centos:
+    runs-on: ubuntu-20.04
+    container: seladb/${{ matrix.image }}
+    strategy:
+      matrix:
+        include:
+          - image: centos7
+            python: python3.8
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Checkout PcapPlusPlus
-  #       uses: actions/checkout@v2
-  #       with:
-  #         repository: seladb/PcapPlusPlus
-  #         path: './PcapPlusPlus'
-  #         ref: ci-live-tests
+      - name: Checkout PcapPlusPlus
+        uses: actions/checkout@v2
+        with:
+          repository: seladb/PcapPlusPlus
+          path: './PcapPlusPlus'
+          ref: ci-live-tests
     
-  #     - name: Install
-  #       run: |
-  #         yum -y install net-tools
-  #         wget https://github.com/appneta/tcpreplay/releases/download/v4.4.1/tcpreplay-4.4.1.tar.gz
-  #         tar xvzf tcpreplay-4.4.1.tar.gz
-  #         cd tcpreplay-4.4.1
-  #         ./configure
-  #         make
-  #         make install
+      - name: Install
+        run: |
+          yum -y install net-tools
+          wget https://github.com/appneta/tcpreplay/releases/download/v4.4.1/tcpreplay-4.4.1.tar.gz
+          tar xvzf tcpreplay-4.4.1.tar.gz
+          cd tcpreplay-4.4.1
+          ./configure
+          make
+          make install
 
-  #     - name: Configure PcapPlusPlus
-  #       run: cd PcapPlusPlus && ./configure-linux.sh --default
+      - name: Configure PcapPlusPlus
+        run: cd PcapPlusPlus && ./configure-linux.sh --default
 
-  #     - name: Build PcapPlusPlus
-  #       run: cd PcapPlusPlus && make all
+      - name: Build PcapPlusPlus
+        run: cd PcapPlusPlus && make all
 
-  #     - name: Run
-  #       run: |
-  #         ${{ matrix.python }} -m pip install -U pip
-  #         ${{ matrix.python }} -m pip install -r requirements.txt
-  #         ${{ matrix.python }} run.py --interface eth0 --test-args="-s"
+      - name: Run
+        run: |
+          ${{ matrix.python }} -m pip install -U pip
+          ${{ matrix.python }} -m pip install -r requirements.txt
+          ${{ matrix.python }} run.py --interface eth0 --test-args="-s"
 
-  # ubuntu:
-  #   runs-on: ubuntu-20.04
-  #   container: seladb/${{ matrix.image }}
-  #   strategy:
-  #     matrix:
-  #       include:
-  #         - image: ubuntu2004
-  #           python: python3
-  #         - image: ubuntu1804
-  #           python: python3.8
-  #         - image: ubuntu1604
-  #           python: python3.8
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  ubuntu:
+    runs-on: ubuntu-20.04
+    container: seladb/${{ matrix.image }}
+    strategy:
+      matrix:
+        include:
+          - image: ubuntu2004
+            python: python3
+          - image: ubuntu1804
+            python: python3.8
+          - image: ubuntu1604
+            python: python3.8
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Checkout PcapPlusPlus
-  #       uses: actions/checkout@v2
-  #       with:
-  #         repository: seladb/PcapPlusPlus
-  #         path: './PcapPlusPlus'
-  #         ref: ci-live-tests
+      - name: Checkout PcapPlusPlus
+        uses: actions/checkout@v2
+        with:
+          repository: seladb/PcapPlusPlus
+          path: './PcapPlusPlus'
+          ref: ci-live-tests
     
-  #     - name: Install
-  #       run: |
-  #         apt install net-tools
-  #         apt install tcpreplay
+      - name: Install
+        run: |
+          apt install net-tools
+          apt install tcpreplay
 
-  #     - name: Configure PcapPlusPlus
-  #       run: cd PcapPlusPlus && ./configure-linux.sh --default
+      - name: Configure PcapPlusPlus
+        run: cd PcapPlusPlus && ./configure-linux.sh --default
 
-  #     - name: Build PcapPlusPlus
-  #       run: cd PcapPlusPlus && make all
+      - name: Build PcapPlusPlus
+        run: cd PcapPlusPlus && make all
 
-  #     - name: Run
-  #       run: |
-  #         ${{ matrix.python }} -m pip install -U pip
-  #         ${{ matrix.python }} -m pip install -r requirements.txt
-  #         ${{ matrix.python }} run.py --interface eth0
+      - name: Run
+        run: |
+          ${{ matrix.python }} -m pip install -U pip
+          ${{ matrix.python }} -m pip install -r requirements.txt
+          ${{ matrix.python }} run.py --interface eth0

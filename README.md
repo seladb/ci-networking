@@ -1,0 +1,2 @@
+[![GitHub Actions](https://github.com/seladb/ci-networking/actions/workflows/networking.yml/badge.svg)](https://github.com/seladb/ci-networking/actions/workflows/networking.yml)
+[![Build Status](https://api.cirrus-ci.com/github/seladb/ci-networking.svg)](https://cirrus-ci.com/github/seladb/ci-networking)
