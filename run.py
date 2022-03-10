@@ -26,13 +26,20 @@ def main():
     default="",
     help="test arguments",
   )
+  parser.add_argument(
+    "--tcpreplay-dir",
+    "-d",
+    type=str,
+    default=None,
+    help="tcpreplay directory",
+  )
   args = parser.parse_args()
 
   ip_address = ni.ifaddresses(args.interface)[ni.AF_INET][0]["addr"]
   print("IP address is: %s" % ip_address)
 
   try:
-    tcpreplay_proc = subprocess.Popen(["tcpreplay", "-i", args.interface, "--mbps=10", "-l", "0", "1.pcap"])
+    tcpreplay_proc = subprocess.Popen(["tcpreplay", "-i", args.interface, "--mbps=10", "-l", "0", "1.pcap"], cwd=args.tcpreplay_dir)
 
     use_sudo = ["sudo"] if args.use_sudo else []
     completed_process = subprocess.run(use_sudo + ["Bin/Packet++Test"] + args.test_args.split(), cwd="PcapPlusPlus/Tests/Packet++Test")
