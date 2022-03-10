@@ -27,12 +27,17 @@ jobs:
         with:
           python-version: "3.8.x"
 
-      - name: Detect network
+      - name: Run tcpreplay
         run: |
-          python -m pip install -r requirements.txt
-          python detect_nic.py
-          tcpreplay-win\tcpreplay --listnics
-          ipconfig
+          tcpreplay-win\tcpreplay.exe -V
+          tcpreplay-win\tcpreplay.exe -h
+
+      # - name: Detect network
+      #   run: |
+      #     python -m pip install -r requirements.txt
+      #     python detect_nic.py
+      #     tcpreplay-win\tcpreplay --listnics
+      #     ipconfig
 
   # macos:
   #   runs-on: ${{ matrix.os-version }}
