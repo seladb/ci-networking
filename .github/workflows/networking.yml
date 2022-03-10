@@ -29,8 +29,8 @@ jobs:
 
       - name: Run tcpreplay
         run: |
-          tcpreplay-win\tcpreplay.exe -V
-          tcpreplay-win\tcpreplay.exe -h
+          cd tcpreplay-win && tcpreplay.exe -V
+          cd tcpreplay-win && tcpreplay.exe -h
 
       # - name: Detect network
       #   run: |
