@@ -32,9 +32,16 @@ jobs:
           .\install_npcap.bat
           echo "PCAP_SDK_DIR=/C/Npcap-sdk" >> $env:GITHUB_ENV
 
-      - name: Install WinPcap
-        run: |
-          .\install_winpcap.bat
+      # - name: Install WinPcap
+      #   run: |
+      #     .\install_winpcap.bat
+
+      - name: Checkout PcapPlusPlus
+        uses: actions/checkout@v2
+        with:
+          repository: seladb/PcapPlusPlus
+          path: './PcapPlusPlus'
+          ref: ci-live-tests
 
       - name: Configure PcapPlusPlus
         working-directory: ${{env.GITHUB_WORKSPACE}}
