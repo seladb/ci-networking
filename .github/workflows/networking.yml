@@ -43,15 +43,15 @@ jobs:
           path: './PcapPlusPlus'
           ref: ci-live-tests
 
-      # - name: Configure PcapPlusPlus
-      #   working-directory: ${{env.GITHUB_WORKSPACE}}
-      #   shell: msys2 {0}
-      #   run: cd PcapPlusPlus && ./configure-windows-mingw.bat mingw-w64 -m  /${{ matrix.sys }} -w ${{ env.PCAP_SDK_DIR }} -s .
+      - name: Configure PcapPlusPlus
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        shell: msys2 {0}
+        run: cd PcapPlusPlus && ./configure-windows-mingw.bat mingw-w64 -m  /${{ matrix.sys }} -w ${{ env.PCAP_SDK_DIR }} -s .
 
-      # - name: Build PcapPlusPlus
-      #   working-directory: ${{env.GITHUB_WORKSPACE}}
-      #   shell: msys2 {0}
-      #   run: cd PcapPlusPlus && mingw32-make all
+      - name: Build PcapPlusPlus
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        shell: msys2 {0}
+        run: cd PcapPlusPlus && mingw32-make all
 
       - name: Run
         run: |
