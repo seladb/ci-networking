@@ -13,7 +13,7 @@ def main():
   print("IP address is: %s" % ip_address)
 
   completed_process = subprocess.run(
-    os.path.join(["rpcapd", "-b", ip_address, "-p", "12321"]),
+    ["rpcapd", "-b", ip_address, "-p", "12321"],
     cwd=os.path.join("PcapPlusPlus", "Tests", "Pcap++Test", "rpcapd"),
     shell=True,
   )
