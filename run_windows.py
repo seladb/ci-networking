@@ -12,11 +12,16 @@ def main():
   ip_address = ni.ifaddresses(ni_interface)[ni.AF_INET][0]["addr"]
   print("IP address is: %s" % ip_address)
 
-  completed_process = subprocess.run(
+  proc = subprocess.Popen(
     ["rpcapd", "-b", ip_address, "-p", "12321"],
     cwd=os.path.join("PcapPlusPlus", "Tests", "Pcap++Test", "rpcapd"),
     shell=True,
   )
+
+  import time
+  time.sleep(10)
+
+  proc.kill()
 
   # try:
   #   tcpreplay_cmd = f"tcpreplay.exe -i \"{tcpreplay_interface}\" --mbps=10 -l 0 ..\\1.pcap"
