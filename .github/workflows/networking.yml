@@ -27,6 +27,10 @@ jobs:
         with:
           python-version: "3.8.x"
 
+      - name: Install WinPcap
+        run: |
+          .\install_winpcap.bat
+
       - name: Run tcpreplay
         run: |
           .\tcpreplay-win\tcpreplay.exe -V
