@@ -16,11 +16,11 @@ def main():
     tcpreplay_cmd = f"tcpreplay.exe -i \"{tcpreplay_interface}\" --mbps=10 -l 0 ..\\1.pcap"
     tcpreplay_proc = subprocess.Popen(tcpreplay_cmd, shell=True, cwd="tcpreplay-win")
 
-    rpcapd_proc = subprocess.Popen(
-      ["rpcapd", "-b", ip_address, "-p", "12321"],
-      cwd=os.path.join("PcapPlusPlus", "Tests", "Pcap++Test", "rpcapd"),
-      shell=True,
-    )
+    # rpcapd_proc = subprocess.Popen(
+    #   ["rpcapd", "-b", ip_address, "-p", "12321"],
+    #   cwd=os.path.join("PcapPlusPlus", "Tests", "Pcap++Test", "rpcapd"),
+    #   shell=True,
+    # )
 
     # completed_process = subprocess.run(
     #   os.path.join("Bin", "Packet++Test"),
@@ -40,7 +40,7 @@ def main():
 
   finally:
     tcpreplay_proc.kill()
-    rpcapd_proc.kill()
+    # rpcapd_proc.kill()
 
 if __name__ == "__main__":
   main()
