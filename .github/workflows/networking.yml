@@ -29,7 +29,7 @@ jobs:
 
       - name: Install Npcap
         run: |
-          ci\install_npcap.bat
+          .\install_npcap.bat
           echo "PCAP_SDK_DIR=/C/Npcap-sdk" >> $env:GITHUB_ENV
 
       # - name: Install WinPcap
