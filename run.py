@@ -1,5 +1,3 @@
-from ast import arg
-import sys
 import subprocess
 import argparse
 import netifaces as ni
