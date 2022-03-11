@@ -28,6 +28,13 @@ def main():
       print("rpcapd is not running!!!")
       exit(1)
 
+    import socket
+    s = socket.socket()
+    address = "127.0.0.1"
+    port = 12321
+    s.connect((address, port))
+    print("CONNECTED!!!!!!")
+
     # completed_process = subprocess.run(
     #   os.path.join("Bin", "Packet++Test"),
     #   cwd=os.path.join("PcapPlusPlus", "Tests", "Packet++Test"),
