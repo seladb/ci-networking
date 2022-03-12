@@ -3,7 +3,7 @@ import subprocess
 import netifaces as ni
 
 
-def find_interface() -> tuple[str, str]:
+def find_interface():
   completed_process = subprocess.run(["tcpreplay.exe", "--listnics"], shell=True, capture_output=True, cwd="tcpreplay-win")
   raw_nics_output = completed_process.stdout.decode("utf-8")
   for row in raw_nics_output.split("\n")[2:]:
