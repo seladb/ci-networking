@@ -43,10 +43,6 @@ jobs:
           path: './PcapPlusPlus'
           ref: ci-live-tests
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 10
-
       - name: Configure PcapPlusPlus
         working-directory: ${{env.GITHUB_WORKSPACE}}
         shell: msys2 {0}
