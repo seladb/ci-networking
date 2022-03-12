@@ -45,6 +45,7 @@ jobs:
 
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 10
 
       - name: Configure PcapPlusPlus
         working-directory: ${{env.GITHUB_WORKSPACE}}
