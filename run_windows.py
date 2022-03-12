@@ -25,7 +25,7 @@ def main():
       exit(completed_process.returncode)
 
     completed_process = subprocess.run(
-      [os.path.join("Bin", "Pcap++Test"), "-i", ip_address, "-t", "TestRemoteCapture"],
+      [os.path.join("Bin", "Pcap++Test"), "-i", ip_address],
       cwd=os.path.join("PcapPlusPlus", "Tests", "Pcap++Test"),
       shell=True,
     )
@@ -34,7 +34,6 @@ def main():
 
   finally:
     tcpreplay_proc.kill()
-    rpcapd_proc.kill()
 
 if __name__ == "__main__":
   main()
