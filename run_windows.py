@@ -2,15 +2,26 @@ import os
 import subprocess
 import netifaces as ni
 
-def main():
+
+def find_interface() -> tuple[str, str]:
   completed_process = subprocess.run(["tcpreplay.exe", "--listnics"], shell=True, capture_output=True, cwd="tcpreplay-win")
   raw_nics_output = completed_process.stdout.decode("utf-8")
-  tcpreplay_interface = raw_nics_output.split("\n")[2].split("\t")[1]
-  print("Interface is: %s" % tcpreplay_interface)
+  for row in raw_nics_output.split("\n")[2:]:
+    columns = row.split("\t")
+    if len(columns) > 1 and columns[1].startswith("\\Device\\NPF_"):
+      interface = columns[1].lstrip("\\Device\\NPF_")
+      try:
+        ip_address = ni.ifaddresses(interface)[ni.AF_INET][0]["addr"]
+        if not ip_address.startswith("169.254"):
+          return interface, ip_address
+      except:
+        pass
+  return None, None
 
-  ni_interface = tcpreplay_interface.lstrip("\\Device\\NPF_")
-  ip_address = ni.ifaddresses(ni_interface)[ni.AF_INET][0]["addr"]
-  print("IP address is: %s" % ip_address)
+
+def main():
+  tcpreplay_interface, ip_address = find_interface()
+  print(f"Interface is {tcpreplay_interface} and IP address is {ip_address}")
 
   try:
     tcpreplay_cmd = f"tcpreplay.exe -i \"{tcpreplay_interface}\" --mbps=10 -l 0 ..\\1.pcap"
