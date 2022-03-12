@@ -1,4 +1,3 @@
-import imp
 import os
 import subprocess
 import netifaces as ni
@@ -17,32 +16,13 @@ def main():
     tcpreplay_cmd = f"tcpreplay.exe -i \"{tcpreplay_interface}\" --mbps=10 -l 0 ..\\1.pcap"
     tcpreplay_proc = subprocess.Popen(tcpreplay_cmd, shell=True, cwd="tcpreplay-win")
 
-    rpcapd_proc = subprocess.Popen(
-      ["rpcapd", "-b", "127.0.0.1", "-p", "12321"],
-      cwd=os.path.join("PcapPlusPlus", "Tests", "Pcap++Test", "rpcapd"),
+    completed_process = subprocess.run(
+      os.path.join("Bin", "Packet++Test"),
+      cwd=os.path.join("PcapPlusPlus", "Tests", "Packet++Test"),
       shell=True,
     )
-    import time
-    time.sleep(3)
-    if rpcapd_proc.poll() is not None:
-      print("rpcapd is not running!!!")
-      exit(1)
-
-    import socket
-    s = socket.socket()
-    address = "127.0.0.1"
-    port = 12321
-    s.connect((address, port))
-    print("CONNECTED!!!!!!")
-    s.close()
-
-    # completed_process = subprocess.run(
-    #   os.path.join("Bin", "Packet++Test"),
-    #   cwd=os.path.join("PcapPlusPlus", "Tests", "Packet++Test"),
-    #   shell=True,
-    # )
-    # if completed_process.returncode != 0:
-    #   exit(completed_process.returncode)
+    if completed_process.returncode != 0:
+      exit(completed_process.returncode)
 
     completed_process = subprocess.run(
       [os.path.join("Bin", "Pcap++Test"), "-i", ip_address, "-t", "TestRemoteCapture"],
