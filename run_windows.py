@@ -34,6 +34,7 @@ def main():
     port = 12321
     s.connect((address, port))
     print("CONNECTED!!!!!!")
+    s.close()
 
     # completed_process = subprocess.run(
     #   os.path.join("Bin", "Packet++Test"),
