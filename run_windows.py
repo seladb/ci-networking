@@ -9,9 +9,9 @@ def find_interface() -> tuple[str, str]:
   for row in raw_nics_output.split("\n")[2:]:
     columns = row.split("\t")
     if len(columns) > 1 and columns[1].startswith("\\Device\\NPF_"):
-      interface = columns[1].lstrip("\\Device\\NPF_")
+      interface = columns[1]
       try:
-        ip_address = ni.ifaddresses(interface)[ni.AF_INET][0]["addr"]
+        ip_address = ni.ifaddresses(interface.lstrip("\\Device\\NPF_"))[ni.AF_INET][0]["addr"]
         if not ip_address.startswith("169.254"):
           return interface, ip_address
       except:
