@@ -11,9 +11,14 @@ def find_interface():
     if len(columns) > 1 and columns[1].startswith("\\Device\\NPF_"):
       interface = columns[1]
       try:
-        ip_address = ni.ifaddresses(interface.lstrip("\\Device\\NPF_"))[ni.AF_INET][0]["addr"]
-        if not ip_address.startswith("169.254"):
-          return interface, ip_address
+        ni_interface = interface.lstrip("\\Device\\NPF_")
+        mac_address = ni.ifaddresses(ni_interface)[-1000][0]["addr"]
+        if not mac_address:
+          continue
+        ip_address = ni.ifaddresses(ni_interface)[ni.AF_INET][0]["addr"]
+        if ip_address.startswith("169.254"):
+          continue
+        return interface, ip_address
       except:
         pass
   return None, None
