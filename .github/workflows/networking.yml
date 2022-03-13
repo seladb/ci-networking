@@ -36,7 +36,7 @@ jobs:
       - name: Install Npcap
         run: |
           .\install_npcap.bat
-          echo "PCAP_SDK_DIR=/C/Npcap-sdk" >> $env:GITHUB_ENV
+          echo "PCAP_SDK_DIR=C:\Npcap-sdk" >> $env:GITHUB_ENV
 
       - name: Download pthreads
         run: |
