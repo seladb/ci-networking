@@ -16,7 +16,6 @@ def find_interface():
         if ip_address.startswith("169.254"):
           continue
         completed_process = subprocess.run(["curl", "--interface", ip_address, "www.google.com"], capture_output=True, shell=True)
-        print(completed_process.stdout)
         if completed_process.returncode != 0:
           continue
         return interface, ip_address
@@ -27,6 +26,9 @@ def find_interface():
 
 def main():
   tcpreplay_interface, ip_address = find_interface()
+  if not tcpreplay_interface or not ip_address:
+    print("Cannot find an interface to run tests on!")
+    exit(1)
   print(f"Interface is {tcpreplay_interface} and IP address is {ip_address}")
 
   try:
