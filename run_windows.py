@@ -15,7 +15,7 @@ def find_interface():
         ip_address = ni.ifaddresses(ni_interface)[ni.AF_INET][0]["addr"]
         if ip_address.startswith("169.254"):
           continue
-        completed_process = subprocess.run(["ping", "-S", ip_address, "-n", "4", "www.google.com"], capture_output=True, shell=True)
+        completed_process = subprocess.run(["ping", "-S", ip_address, "-n", "4", "8.8.8.8"], capture_output=True, shell=True)
         if completed_process.returncode != 0:
           continue
         return interface, ip_address
