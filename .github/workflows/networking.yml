@@ -46,7 +46,7 @@ jobs:
 
       - name: Set Zstd
         run: |
-          ci\install_zstd.bat
+          .\install_zstd.bat
           echo "ZSTD_HOME_PARAM=-z C:\zstd" >> $env:GITHUB_ENV
         if: matrix.use_zstd == true
 
