@@ -36,7 +36,7 @@ def main():
       exit(completed_process.returncode)
 
     completed_process = subprocess.run(
-      [os.path.join("Bin", "Pcap++Test"), "-i", ip_address],
+      [os.path.join("Bin", "Pcap++Test"), "-i", ip_address, "-x", "TestRemoteCapture"],
       cwd=os.path.join("PcapPlusPlus", "Tests", "Pcap++Test"),
       shell=True,
     )
