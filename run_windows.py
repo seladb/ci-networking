@@ -12,11 +12,11 @@ def find_interface():
       interface = columns[1]
       try:
         ni_interface = interface.lstrip("\\Device\\NPF_")
-        mac_address = ni.ifaddresses(ni_interface)[-1000][0]["addr"]
-        if not mac_address:
-          continue
         ip_address = ni.ifaddresses(ni_interface)[ni.AF_INET][0]["addr"]
         if ip_address.startswith("169.254"):
+          continue
+        completed_process = subprocess.run(["ping", "-S", ip_address, "-n", "4", "www.google.com"], capture_output=True, shell=True)
+        if completed_process.returncode != 0:
           continue
         return interface, ip_address
       except:
