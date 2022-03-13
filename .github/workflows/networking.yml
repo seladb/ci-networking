@@ -4,6 +4,7 @@ on: [push]
 jobs:
   visual-studio:
     runs-on: windows-2019
+    strategy:
       matrix:
         include:
           - vs-version: vs2019
@@ -57,15 +58,15 @@ jobs:
 
       - name: Build PcapPlusPlus
         working-directory: ${{env.GITHUB_WORKSPACE}}
-        run: msbuild /m mk\${{matrix.vs-version}}\PcapPlusPlus.sln /p:Configuration=${{matrix.config}} /p:Platform=${{matrix.platform}}
+        run: msbuild /m PcapPlusPlus\mk\${{matrix.vs-version}}\PcapPlusPlus.sln /p:Configuration=${{matrix.config}} /p:Platform=${{matrix.platform}}
 
       - name: Build Examples
         working-directory: ${{env.GITHUB_WORKSPACE}}
-        run: msbuild /m mk\${{matrix.vs-version}}\PcapPlusPlus-Examples.sln /p:Configuration=${{matrix.config}} /p:Platform=${{matrix.platform}}
+        run: msbuild /m PcapPlusPlus\mk\${{matrix.vs-version}}\PcapPlusPlus-Examples.sln /p:Configuration=${{matrix.config}} /p:Platform=${{matrix.platform}}
 
       - name: Build Tutorials
         working-directory: ${{env.GITHUB_WORKSPACE}}
-        run: msbuild /m mk\${{matrix.vs-version}}\Tutorials.sln /p:Configuration=${{matrix.config}} /p:Platform=${{matrix.platform}}
+        run: msbuild /m PcapPlusPlus\mk\${{matrix.vs-version}}\Tutorials.sln /p:Configuration=${{matrix.config}} /p:Platform=${{matrix.platform}}
 
       - name: Run
         run: |
