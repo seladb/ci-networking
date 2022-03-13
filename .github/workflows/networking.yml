@@ -21,6 +21,7 @@ jobs:
             platform: x86
             config: Release
 
+    steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
