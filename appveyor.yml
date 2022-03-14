@@ -22,7 +22,7 @@ for:
   - install_npcap.bat
   - python -m pip install --upgrade pip
   - python -m pip install -r requirements.txt
-  - python patch_mingw.py
   - git clone https://github.com/seladb/PcapPlusPlus-Deploy
   - cd PcapPlusPlus-Deploy\Packages
   - set PATH=%PATH%;C:\MinGW\bin&& 7z e pthreads-GC-w32-2.10-mingw32-pre-20160821-1-dev.tar.xz -oC:\pthreads && 7z x C:\pthreads\pthreads-GC-w32-2.10-mingw32-pre-20160821-1-dev.tar -oC:\pthreads && xcopy /Y C:\pthreads\include\* C:\MinGW\include && xcopy /Y C:\pthreads\lib\* C:\MinGW\lib
+  - python patch_mingw.py
