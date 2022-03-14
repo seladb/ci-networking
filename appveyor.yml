@@ -11,7 +11,7 @@ init:
 install:
 - install_npcap.bat
 - "python -m pip install --upgrade pip"
-- "python -m pip install -r C:\\projects\\PcapPlusPlus\\Tests\\ExamplesTest\\requirements.txt"
+- "python -m pip install -r requirements.txt"
 
 build_script:
 - "python temp.py"
