@@ -33,7 +33,9 @@ def main():
   print(f"Interface is {tcpreplay_interface} and IP address is {ip_address}")
 
   tcpreplay_cmd = f"tcpreplay.exe -i \"{tcpreplay_interface}\" --mbps=10 -l 0 ..\\1.pcap"
+  print("Starting tcpreplay...")
   subprocess.run(tcpreplay_cmd, shell=True, cwd="tcpreplay-win")
+  print("tcpreplay done!!")
 
 if __name__ == "__main__":
   main()
