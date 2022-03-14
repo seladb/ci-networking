@@ -1,0 +1,17 @@
+version: 1.0.{build}
+
+environment:
+  matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      compiler: mingw32
+
+init:
+- set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+
+install:
+- install_npcap.bat
+- "python -m pip install --upgrade pip"
+- "python -m pip install -r C:\\projects\\PcapPlusPlus\\Tests\\ExamplesTest\\requirements.txt"
+
+build_script:
+- "python temp.py"
