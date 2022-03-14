@@ -40,6 +40,7 @@ def main():
 
   finally:
     tcpreplay_proc.kill()
+    print(tcpreplay_proc.stdout)
 
 if __name__ == "__main__":
   main()
