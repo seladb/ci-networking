@@ -9,11 +9,6 @@ environment:
 init:
 - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
 
-install:
-- install_npcap.bat
-- "python -m pip install --upgrade pip"
-- "python -m pip install -r requirements.txt"
-
 build_script:
 - "python temp.py"
 
@@ -24,6 +19,9 @@ for:
       - compiler: mingw32
 
   install:
+  - install_npcap.bat
+  - python -m pip install --upgrade pip
+  - python -m pip install -r requirements.txt
   - python patch_mingw.py
   - git clone https://github.com/seladb/PcapPlusPlus-Deploy
   - cd PcapPlusPlus-Deploy\Packages
