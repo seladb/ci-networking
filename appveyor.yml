@@ -8,9 +8,7 @@ environment:
 
 init:
 - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
-
-build_script:
-- "python temp.py"
+- git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
 
 for:
 -
@@ -28,9 +26,8 @@ for:
   - cd ..\..\
   - python patch_mingw.py
 
-before_build:
-- git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
-- cd PcapPlusPlus && configure-windows-mingw.bat mingw32 -m C:\MinGW -w C:\Npcap-sdk
+  before_build:
+  - cd PcapPlusPlus && configure-windows-mingw.bat mingw32 -m C:\MinGW -w C:\Npcap-sdk
 
-build_script:
-- cd PcapPlusPlus && mingw32-make all
+  build_script:
+  - cd PcapPlusPlus && mingw32-make all
