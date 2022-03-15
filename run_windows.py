@@ -1,5 +1,4 @@
 import os
-import signal
 import subprocess
 import netifaces as ni
 
@@ -36,29 +35,24 @@ def main():
     tcpreplay_cmd = f"tcpreplay.exe -i \"{tcpreplay_interface}\" --mbps=10 -l 0 ..\\1.pcap"
     tcpreplay_proc = subprocess.Popen(tcpreplay_cmd, shell=True, cwd="tcpreplay-win")
 
-    # completed_process = subprocess.run(
-    #   os.path.join("Bin", "Packet++Test"),
-    #   cwd=os.path.join("PcapPlusPlus", "Tests", "Packet++Test"),
-    #   shell=True,
-    # )
-    # if completed_process.returncode != 0:
-    #   exit(completed_process.returncode)
+    completed_process = subprocess.run(
+      os.path.join("Bin", "Packet++Test"),
+      cwd=os.path.join("PcapPlusPlus", "Tests", "Packet++Test"),
+      shell=True,
+    )
+    if completed_process.returncode != 0:
+      exit(completed_process.returncode)
 
-    # completed_process = subprocess.run(
-    #   [os.path.join("Bin", "Pcap++Test"), "-i", ip_address, "-x", "TestRemoteCapture"],
-    #   cwd=os.path.join("PcapPlusPlus", "Tests", "Pcap++Test"),
-    #   shell=True,
-    # )
-    # if completed_process.returncode != 0:
-    #   exit(completed_process.returncode)
+    completed_process = subprocess.run(
+      [os.path.join("Bin", "Pcap++Test"), "-i", ip_address, "-x", "TestRemoteCapture"],
+      cwd=os.path.join("PcapPlusPlus", "Tests", "Pcap++Test"),
+      shell=True,
+    )
+    if completed_process.returncode != 0:
+      exit(completed_process.returncode)
 
-    import time
-    time.sleep(20)
   finally:
-    print("killing tcpreplay")
     subprocess.call(['taskkill', '/F', '/T', '/PID',  str(tcpreplay_proc.pid)])
-    print("killed!!")
-  exit(0)
 
 if __name__ == "__main__":
   main()
