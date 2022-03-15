@@ -31,3 +31,6 @@ for:
 
   build_script:
   - cd PcapPlusPlus && mingw32-make all
+
+  test_script:
+  - python run_windows.py
