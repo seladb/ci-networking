@@ -57,6 +57,7 @@ def main():
   finally:
     print("killing tcpreplay")
     os.kill(tcpreplay_proc.pid, signal.CTRL_BREAK_EVENT)
+    tcpreplay_proc.terminate()
     print("killed!!")
   exit(0)
 
