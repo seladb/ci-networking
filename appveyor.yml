@@ -3,34 +3,70 @@ version: 1.0.{build}
 environment:
   PYTHON: "C:\\Python38-x64"
   matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      compiler: mingw32
+    # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    #   compiler: mingw32
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      compiler: vs2015
+      platform: x86
+      config: Debug
+    # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    #   compiler: vs2015
+    #   platform: x64
+    #   config: Release
 
 init:
 - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+
+# for:
+# -
+#   matrix:
+#     only:
+#       - compiler: mingw32
+
+#   install:
+#   - install_winpcap.bat
+#   - python -m pip install --upgrade pip
+#   - python -m pip install -r requirements.txt
+#   - git clone https://github.com/seladb/PcapPlusPlus-Deploy
+#   - cd PcapPlusPlus-Deploy\Packages
+#   - set PATH=%PATH%;C:\MinGW\bin&& 7z e pthreads-GC-w32-2.10-mingw32-pre-20160821-1-dev.tar.xz -oC:\pthreads && 7z x C:\pthreads\pthreads-GC-w32-2.10-mingw32-pre-20160821-1-dev.tar -oC:\pthreads && xcopy /Y C:\pthreads\include\* C:\MinGW\include && xcopy /Y C:\pthreads\lib\* C:\MinGW\lib
+#   - cd ..\..\
+#   - python patch_mingw.py
+
+#   before_build:
+#   - git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
+#   - cd PcapPlusPlus && configure-windows-mingw.bat mingw32 -m C:\MinGW -w C:\WpdPack
+
+#   build_script:
+#   - cd PcapPlusPlus && mingw32-make all && cd ..
+
+#   test_script:
+#   - python run_windows.py
 
 for:
 -
   matrix:
     only:
-      - compiler: mingw32
+      - compiler: vs2015
 
   install:
-  - install_winpcap.bat
+  - install_npcap.bat
   - python -m pip install --upgrade pip
   - python -m pip install -r requirements.txt
   - git clone https://github.com/seladb/PcapPlusPlus-Deploy
   - cd PcapPlusPlus-Deploy\Packages
-  - set PATH=%PATH%;C:\MinGW\bin&& 7z e pthreads-GC-w32-2.10-mingw32-pre-20160821-1-dev.tar.xz -oC:\pthreads && 7z x C:\pthreads\pthreads-GC-w32-2.10-mingw32-pre-20160821-1-dev.tar -oC:\pthreads && xcopy /Y C:\pthreads\include\* C:\MinGW\include && xcopy /Y C:\pthreads\lib\* C:\MinGW\lib
+  - 7z x pthreads-w32-2-9-1-release.zip -oC:\pthreads
   - cd ..\..\
-  - python patch_mingw.py
 
   before_build:
   - git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
-  - cd PcapPlusPlus && configure-windows-mingw.bat mingw32 -m C:\MinGW -w C:\WpdPack
+  - cd PcapPlusPlus && configure-windows-visual-studio.bat -v %compiler% -w C:\Npcap-sdk-p C:\pthreads
 
   build_script:
-  - cd PcapPlusPlus && mingw32-make all && cd ..
+  - cd PcapPlusPlus
+  - ps: msbuild mk\%compiler%\PcapPlusPlus.sln /p:Configuration=%config% /p:Platform=%platform%
+  - ps: msbuild mk\%compiler%\PcapPlusPlus-Examples.sln /p:Configuration=%config% /p:Platform=%platform%
+  - ps: msbuild mk\%compiler%\Tutorials.sln /p:Configuration=%config% /p:Platform=%platform%
 
   test_script:
   - python run_windows.py
