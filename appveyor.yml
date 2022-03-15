@@ -19,22 +19,18 @@ for:
   - install_winpcap.bat
   - python -m pip install --upgrade pip
   - python -m pip install -r requirements.txt
-  # - git clone https://github.com/seladb/PcapPlusPlus-Deploy
-  # - cd PcapPlusPlus-Deploy\Packages
-  # - set PATH=%PATH%;C:\MinGW\bin&& 7z e pthreads-GC-w32-2.10-mingw32-pre-20160821-1-dev.tar.xz -oC:\pthreads && 7z x C:\pthreads\pthreads-GC-w32-2.10-mingw32-pre-20160821-1-dev.tar -oC:\pthreads && xcopy /Y C:\pthreads\include\* C:\MinGW\include && xcopy /Y C:\pthreads\lib\* C:\MinGW\lib
-  # - cd ..\..\
-  # - python patch_mingw.py
+  - git clone https://github.com/seladb/PcapPlusPlus-Deploy
+  - cd PcapPlusPlus-Deploy\Packages
+  - set PATH=%PATH%;C:\MinGW\bin&& 7z e pthreads-GC-w32-2.10-mingw32-pre-20160821-1-dev.tar.xz -oC:\pthreads && 7z x C:\pthreads\pthreads-GC-w32-2.10-mingw32-pre-20160821-1-dev.tar -oC:\pthreads && xcopy /Y C:\pthreads\include\* C:\MinGW\include && xcopy /Y C:\pthreads\lib\* C:\MinGW\lib
+  - cd ..\..\
+  - python patch_mingw.py
 
-  # before_build:
-  # - git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
-  # - cd PcapPlusPlus && configure-windows-mingw.bat mingw32 -m C:\MinGW -w C:\WpdPack
-
-  # build_script:
-  # - cd PcapPlusPlus && mingw32-make all && cd ..
-
-  # test_script:
-  # - python run_windows.py
+  before_build:
+  - git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
+  - cd PcapPlusPlus && configure-windows-mingw.bat mingw32 -m C:\MinGW -w C:\WpdPack
 
   build_script:
-  - python -V
+  - cd PcapPlusPlus && mingw32-make all && cd ..
+
+  test_script:
   - python run_windows.py
