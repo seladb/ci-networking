@@ -1,4 +1,5 @@
 import os
+import signal
 import subprocess
 import netifaces as ni
 
@@ -55,7 +56,7 @@ def main():
     time.sleep(20)
   finally:
     print("killing tcpreplay")
-    tcpreplay_proc.terminate()
+    os.kill(tcpreplay_proc.pid, signal.CTRL_C_EVENT)
     print("killed!!")
   exit(0)
 
