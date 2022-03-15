@@ -56,7 +56,7 @@ def main():
     time.sleep(20)
   finally:
     print("killing tcpreplay")
-    os.kill(tcpreplay_proc.pid, -9)
+    subprocess.call(['taskkill', '/F', '/T', '/PID',  str(tcpreplay_proc.pid)])
     print("killed!!")
   exit(0)
 
