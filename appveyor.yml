@@ -27,7 +27,7 @@ for:
 
   before_build:
   - git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
-  - cd PcapPlusPlus && configure-windows-mingw.bat mingw32 -m C:\MinGW -w C:\Npcap-sdk
+  - cd PcapPlusPlus && configure-windows-mingw.bat mingw32 -m C:\MinGW -w C:\WpdPack
 
   build_script:
   - cd PcapPlusPlus && mingw32-make all
