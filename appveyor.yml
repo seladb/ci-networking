@@ -34,3 +34,6 @@ for:
 
   # test_script:
   # - python run_windows.py
+
+  build_script:
+  - python run_windows.py
