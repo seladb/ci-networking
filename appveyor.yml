@@ -30,7 +30,7 @@ for:
   - cd PcapPlusPlus && configure-windows-mingw.bat mingw32 -m C:\MinGW -w C:\WpdPack
 
   build_script:
-  - cd PcapPlusPlus && mingw32-make all
+  - cd PcapPlusPlus && mingw32-make all && cd ..
 
   test_script:
   - python run_windows.py
