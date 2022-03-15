@@ -16,7 +16,7 @@ for:
       - compiler: mingw32
 
   install:
-  - install_npcap.bat
+  - install_winpcap.bat
   - python -m pip install --upgrade pip
   - python -m pip install -r requirements.txt
   - git clone https://github.com/seladb/PcapPlusPlus-Deploy
