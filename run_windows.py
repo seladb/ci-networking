@@ -1,4 +1,5 @@
 import os
+import signal
 import subprocess
 import netifaces as ni
 
@@ -33,7 +34,7 @@ def main():
 
   try:
     tcpreplay_cmd = f"tcpreplay.exe -i \"{tcpreplay_interface}\" --mbps=10 -l 0 ..\\1.pcap"
-    tcpreplay_proc = subprocess.Popen(tcpreplay_cmd, shell=True, cwd="tcpreplay-win")
+    tcpreplay_proc = subprocess.Popen(tcpreplay_cmd, shell=True, cwd="tcpreplay-win", preexec_fn=os.setsid)
 
     # completed_process = subprocess.run(
     #   os.path.join("Bin", "Packet++Test"),
@@ -55,7 +56,8 @@ def main():
     time.sleep(20)
   finally:
     print("killing tcpreplay")
-    tcpreplay_proc.kill()
+    os.killpg(os.getpgid(tcpreplay_proc.pid), signal.SIGTERM)
+    # tcpreplay_proc.kill()
     print("killed!!")
   exit(0)
 
