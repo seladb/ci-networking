@@ -33,7 +33,7 @@ def main():
 
   try:
     tcpreplay_cmd = f"tcpreplay.exe -i \"{tcpreplay_interface}\" --mbps=10 -l 0 ..\\1.pcap"
-    tcpreplay_proc = subprocess.Popen(tcpreplay_cmd, shell=True, cwd="tcpreplay-win", preexec_fn=os.setsid)
+    tcpreplay_proc = subprocess.Popen(tcpreplay_cmd, shell=True, cwd="tcpreplay-win")
 
     # completed_process = subprocess.run(
     #   os.path.join("Bin", "Packet++Test"),
