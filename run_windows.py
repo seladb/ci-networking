@@ -51,6 +51,8 @@ def main():
     # if completed_process.returncode != 0:
     #   exit(completed_process.returncode)
 
+    import time
+    time.sleep(20)
   finally:
     print("killing tcpreplay")
     tcpreplay_proc.kill()
