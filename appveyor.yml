@@ -36,4 +36,5 @@ for:
   # - python run_windows.py
 
   build_script:
+  - python -V
   - python run_windows.py
