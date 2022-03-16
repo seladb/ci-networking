@@ -67,6 +67,7 @@ for:
   - ps: msbuild mk\$env:compiler\PcapPlusPlus.sln /p:Configuration=$env:config /p:Platform=$env:platform
   - ps: msbuild mk\$env:compiler\PcapPlusPlus-Examples.sln /p:Configuration=$env:config /p:Platform=$env:platform
   - ps: msbuild mk\$env:compiler\Tutorials.sln /p:Configuration=$env:config /p:Platform=$env:platform
+  - cd ..
 
   test_script:
   - python run_windows.py
