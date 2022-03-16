@@ -1,4 +1,5 @@
 import os
+import argparse
 import subprocess
 import netifaces as ni
 
@@ -25,6 +26,17 @@ def find_interface():
 
 
 def main():
+  parser = argparse.ArgumentParser()
+  parser.add_argument(
+    "--skip-tests",
+    "-s",
+    type=str,
+    nargs="+",
+    default=[],
+    help="Pcap++ tests to skip"
+  )
+  args = parser.parse_args()
+
   tcpreplay_interface, ip_address = find_interface()
   if not tcpreplay_interface or not ip_address:
     print("Cannot find an interface to run tests on!")
@@ -43,8 +55,9 @@ def main():
     if completed_process.returncode != 0:
       exit(completed_process.returncode)
 
+    skip_tests = ["TestRemoteCapture"] + args.skip_tests
     completed_process = subprocess.run(
-      [os.path.join("Bin", "Pcap++Test"), "-i", ip_address, "-x", "TestRawSockets"],
+      [os.path.join("Bin", "Pcap++Test"), "-i", ip_address, "-x", ";".join(skip_tests)],
       cwd=os.path.join("PcapPlusPlus", "Tests", "Pcap++Test"),
       shell=True,
     )
