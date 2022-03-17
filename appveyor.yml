@@ -64,4 +64,4 @@ for:
   - cd PcapPlusPlus && mingw32-make all && cd ..
 
   test_script:
-  - python run_windows.py
+  - python run_windows.py -s TestRawSockets
