@@ -17,6 +17,29 @@ environment:
 init:
 - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
 
+install:
+- install_npcap.bat
+- python -m pip install --upgrade pip
+- python -m pip install -r requirements.txt
+- git clone https://github.com/seladb/PcapPlusPlus-Deploy
+- cd PcapPlusPlus-Deploy\Packages
+- 7z x pthreads-w32-2-9-1-release.zip -oC:\pthreads
+- cd ..\..\
+
+before_build:
+- git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
+- cd PcapPlusPlus && configure-windows-visual-studio.bat -v %compiler% -w C:\Npcap-sdk -p C:\pthreads
+
+build_script:
+- cd PcapPlusPlus
+- ps: msbuild mk\$env:compiler\PcapPlusPlus.sln /p:Configuration=$env:config /p:Platform=$env:platform
+- ps: msbuild mk\$env:compiler\PcapPlusPlus-Examples.sln /p:Configuration=$env:config /p:Platform=$env:platform
+- ps: msbuild mk\$env:compiler\Tutorials.sln /p:Configuration=$env:config /p:Platform=$env:platform
+- cd ..
+
+test_script:
+- python run_windows.py -s TestRawSockets
+
 for:
 -
   matrix:
@@ -42,33 +65,3 @@ for:
 
   test_script:
   - python run_windows.py
-
-for:
--
-  matrix:
-    only:
-      - compiler: vs2015
-      - compiler: vs2017
-
-  install:
-  - install_npcap.bat
-  - python -m pip install --upgrade pip
-  - python -m pip install -r requirements.txt
-  - git clone https://github.com/seladb/PcapPlusPlus-Deploy
-  - cd PcapPlusPlus-Deploy\Packages
-  - 7z x pthreads-w32-2-9-1-release.zip -oC:\pthreads
-  - cd ..\..\
-
-  before_build:
-  - git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
-  - cd PcapPlusPlus && configure-windows-visual-studio.bat -v %compiler% -w C:\Npcap-sdk -p C:\pthreads
-
-  build_script:
-  - cd PcapPlusPlus
-  - ps: msbuild mk\$env:compiler\PcapPlusPlus.sln /p:Configuration=$env:config /p:Platform=$env:platform
-  - ps: msbuild mk\$env:compiler\PcapPlusPlus-Examples.sln /p:Configuration=$env:config /p:Platform=$env:platform
-  - ps: msbuild mk\$env:compiler\Tutorials.sln /p:Configuration=$env:config /p:Platform=$env:platform
-  - cd ..
-
-  test_script:
-  - python run_windows.py -s TestRawSockets
