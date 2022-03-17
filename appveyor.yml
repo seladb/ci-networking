@@ -27,7 +27,7 @@ install:
 - cd ..\..\
 
 before_build:
-- git clone https://github.com/seladb/PcapPlusPlus.git -b ci-live-tests
+- git clone https://github.com/seladb/PcapPlusPlus.git
 - cd PcapPlusPlus && configure-windows-visual-studio.bat -v %compiler% -w C:\Npcap-sdk -p C:\pthreads
 
 build_script:
