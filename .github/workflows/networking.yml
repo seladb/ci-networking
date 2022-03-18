@@ -55,7 +55,6 @@ jobs:
         with:
           repository: seladb/PcapPlusPlus
           path: './PcapPlusPlus'
-          ref: ci-live-tests
 
       - name: Configure PcapPlusPlus
         working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -119,7 +118,6 @@ jobs:
         with:
           repository: seladb/PcapPlusPlus
           path: './PcapPlusPlus'
-          ref: ci-live-tests
 
       - name: Configure PcapPlusPlus
         working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -151,7 +149,6 @@ jobs:
         with:
           repository: seladb/PcapPlusPlus
           path: './PcapPlusPlus'
-          ref: ci-live-tests
 
       - uses: actions/setup-python@v2
         with:
